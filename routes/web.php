@@ -11,8 +11,11 @@
 |
 */
 
+// Authentication scaffolding routes
 Auth::routes(['verify' => true]);
 
-Route::get('/', 'HomeController@index');
-
+// Logged-in Homepage
 Route::get('/home', 'HomeController@index')->name('home');
+
+// Root URL
+Route::get('/', function () {return redirect('home');});
