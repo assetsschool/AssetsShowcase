@@ -23,15 +23,12 @@
 
                     <form action="{{ route('edit-my-profile') }}" method="post" enctype="multipart/form-data">
 
+                        @method('PUT')
                         @csrf
 
                         <div class="form-group">
                             <label for="biography">Biography</label>
-                            <textarea name="biography" id="biography" class="form-control" cols="40" rows="5" placeholder="Enter your biography.">
-                                @isset ($user->profile)
-                                    {{ $user->profile->biography }}
-                                @endisset
-                            </textarea>
+                            <textarea name="biography" id="biography" class="form-control" placeholder="Enter your biography.">@isset ($user->profile){{ $user->profile->biography }}@endisset</textarea>
                             <small id="emailHelp" class="form-text text-muted">Write a small description about yourself.</small>
                         </div>
 

@@ -21,10 +21,18 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Current user's profile
 Route::get('/me', 'ProfileController@index')->name('me');
 // Post request for editing own profile
-Route::post('/me', 'ProfileController@edit')->name('edit-my-profile');
+Route::put('/me', 'ProfileController@edit')->name('edit-my-profile');
 // Looking for other user profiles
 Route::get('/profile/{email}', 'ProfileController@view')->name('profile');
 
+// Show all projects in the database
+Route::get('/projects', 'ProjectController@view')->name('project');
+// Creating a project input request                                                  //Change me (you know whats up).
+Route::get('/project', 'ProjectController@createView')->name('new-project');
+// Creating a project
+Route::put('/project', 'ProjectController@create')->name('create-new-project');
+// Viewing other peoples projects
+Route::get('/project/{email}/{title}', 'ProjectController@view')->name('project');
 
 // Root URL
 Route::get('/', function () {return redirect('home');});
