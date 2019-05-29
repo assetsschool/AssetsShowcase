@@ -26,10 +26,8 @@ class CreateProjectsTable extends Migration
             $table->date('date');
             // The state of the project: pending, private, approved, etc.
             $table->string('state')->default('draft');
-            // Prevents database holes
-            $table->boolean('deleted')->default(false);
 
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -26,7 +26,7 @@ Route::put('/me', 'ProfileController@edit')->name('edit-my-profile');
 Route::get('/profile/{email}', 'ProfileController@view')->name('profile');
 
 // Show all projects in the database
-Route::get('/projects', 'ProjectController@view')->name('project');
+Route::get('/projects', 'ProjectController@viewAll')->name('projects');
 // Creating a project input request                                                  //Change me (you know whats up).
 Route::get('/project', 'ProjectController@createView')->name('new-project');
 // Creating a project

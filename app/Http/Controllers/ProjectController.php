@@ -14,14 +14,12 @@ class ProjectController extends Controller
      */
     public function createView() // change me
     {
-        // Returns the
-        return view('profile', [
-            'user' => Auth::user(),
-        ]);
+        // Returns the view with the form to create a project
+        return view('project');
     }
 
     /**
-     * Show the requested user profile.
+     * Show the requested project.
      * @param string $email
      * @param string $title
      * @return \Illuminate\Contracts\Support\Renderable
@@ -34,14 +32,16 @@ class ProjectController extends Controller
         // Uppercases the first letter of each word.
         $parsedProjectTitle = ucwords(strtolower($parsedProjectTitle));
 
+        // Gets the user requesting the page
+        $user = Auth::user();
         // Tries to query the user based on the email.
-        $user = \App\User::where('email', $email)->first();
+        $requestedUser = \App\User::where('email', $email)->first();
 
         // Tries to find the project.
-        $project = $user->projects()->where('title', $parsedProjectTitle)->first();
+        $project = $requestedUser->projects()->where('title', $parsedProjectTitle)->first();
 
         // Checks if the user was found
-        if ($user) {
+        if ($requestedUser) {
             if ($project) {
                 return view('project', [
                     'project' => $project
@@ -57,7 +57,24 @@ class ProjectController extends Controller
     }
 
     /**
-     * Show the requested user profile.
+     * Show all the projects in the database by date.
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function viewAll()
+    {
+        // Retrives all of the projects (up to 100), and orders them by descending date.
+        $projects = \App\Project::where('state', 'draft')
+            ->with('user')
+            ->orderBy('date', 'desc')
+            ->get();
+
+        return view('projects', [
+            'projects' => $projects
+        ]);
+    }
+
+    /**
+     * The create action for all projects.
      * @param ProjectCreate $request
      * @return \Illuminate\Contracts\Support\Renderable
      */
@@ -73,9 +90,12 @@ class ProjectController extends Controller
         $validated['description'] = preg_replace(['/\s{2,}/', '/[\t\n]/'], ' ', $validated['description']);
 
         // Checks if the user already has an project with that name.
-        $existingProject = $user()->projects()->where('title', $validated['title']);
+        $existingProject = $user->projects()->where('title', $validated['title'])->first();
         if ($existingProject) {
-            return redirect()->back()->withError('You already have a project with that title.')->withInput();
+            return back()
+            ->withError('You already have a project with that title.')
+            ->withErrors([ 'title' => true ])
+            ->withInput($request->input());
         }
 
         // Creates a new project for the user

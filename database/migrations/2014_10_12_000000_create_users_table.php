@@ -22,14 +22,13 @@ class CreateUsersTable extends Migration
 
             // The type of user: student, teacher, parent, etc...
             $table->string('type', 16)->default('student');
-            // Database hole protection.
-            $table->boolean('deleted')->default(false);
 
 
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

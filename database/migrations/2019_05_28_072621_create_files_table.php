@@ -28,10 +28,8 @@ class CreateFilesTable extends Migration
             $table->string('file_name');
             // File extention
             $table->string('extension', 16);
-            // Prevents database holes.
-            $table->boolean('deleted')->default(false);
 
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }

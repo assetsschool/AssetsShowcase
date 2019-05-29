@@ -26,7 +26,7 @@ class CreateProfilesTable extends Migration
             // Profile picure hash path
             $table->string('profile_picture')->nullable();
 
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -21,10 +21,9 @@ class CreateFavoritesTable extends Migration
             $table->bigInteger('user_id');
             // Matches the like to the project
             $table->bigInteger('project_id');
-            // Prevents database holes
-            $table->boolean('deleted')->default(false);
 
-
+            
+            $table->softDeletes();
             $table->timestamps();
         });
     }
