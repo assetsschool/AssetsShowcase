@@ -17,3 +17,11 @@ $yellow: #ffed4a;
 $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
+
+
+.profile-header {
+    hr {
+        margin-right: 85%;
+        border-top: 8px dotted rgba(0, 0, 0, 0.1);
+    }
+}

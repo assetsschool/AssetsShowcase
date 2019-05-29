@@ -17,6 +17,7 @@ class ProfileController extends Controller
         // Returns the
         return view('profile', [
             'user' => Auth::user(),
+            'me' => true,
         ]);
     }
 
@@ -29,7 +30,7 @@ class ProfileController extends Controller
     {
 
         // Tries to query the user based on the email, along with the profile object
-        $user = \App\User::where('email', $email)->with('profile')->first();
+        $user = \App\User::where('email', $email)->with(['profile'])->first();
 
         // Checks if the user was found
         if ($user) {
